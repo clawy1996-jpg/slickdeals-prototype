@@ -19,7 +19,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {categories.map((category) => (
-                  <button key={category} className={`rounded-full px-3 py-1.5 text-sm font-semibold ${category === "Trending" ? "bg-[var(--accent)] text-white" : "bg-slate-100 text-slate-600"}`}>{category}</button>
+                  <Link key={category} href={category === "Trending" ? "/" : "/alerts"} className={`rounded-full px-3 py-1.5 text-sm font-semibold ${category === "Trending" ? "bg-[var(--accent)] text-white" : "bg-slate-100 text-slate-600"}`}>{category}</Link>
                 ))}
               </div>
             </div>
@@ -37,8 +37,8 @@ export default function HomePage() {
                     <span>{hero.shipping}</span>
                   </div>
                   <div className="flex gap-3">
-                    <Link href={hero.externalUrl ?? `/deals/${hero.slug}`} target={hero.externalUrl ? "_blank" : undefined} rel={hero.externalUrl ? "noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Open live deal</Link>
-                    <button className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Personalize feed</button>
+                    <a href={hero.externalUrl ?? `/deals/${hero.slug}`} target={hero.externalUrl ? "_blank" : undefined} rel={hero.externalUrl ? "noopener noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Open live deal</a>
+                    <Link href="/alerts" className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Personalize feed</Link>
                   </div>
                 </div>
                 <div className="space-y-3 rounded-2xl bg-white p-4">
@@ -75,10 +75,10 @@ export default function HomePage() {
           </SidebarCard>
           <SidebarCard title="Community activity">
             {frontpage.slice(0, 4).map((deal) => (
-              <Link key={deal.id} href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="block rounded-xl border border-slate-200 p-3 text-sm hover:border-blue-500">
+              <a key={deal.id} href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noopener noreferrer" : undefined} className="block rounded-xl border border-slate-200 p-3 text-sm hover:border-blue-500">
                 <div className="font-semibold text-slate-900">{deal.title}</div>
                 <div className="mt-1 text-xs text-slate-500">{deal.temperature} heat • {deal.comments} comments</div>
-              </Link>
+              </a>
             ))}
           </SidebarCard>
           <SidebarCard title="Prototype notes">

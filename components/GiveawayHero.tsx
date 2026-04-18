@@ -40,7 +40,7 @@ export function GiveawayHero({ title, prize, bannerImage, entries, description }
             ))}
           </div>
           <div className="rounded-2xl bg-blue-50 p-4 text-sm text-blue-900">{entries.toLocaleString()} entries so far. Join the crowd and fake an instant success state with local-only interaction.</div>
-          <button className="w-full rounded-2xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Enter giveaway</button>
+          <a href="/alerts" className="block w-full rounded-2xl bg-[var(--accent)] px-4 py-3 text-center text-sm font-semibold text-white">Enter giveaway</a>
         </div>
       </div>
     </section>

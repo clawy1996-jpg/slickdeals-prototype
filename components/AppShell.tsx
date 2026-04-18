@@ -30,8 +30,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             />
           </div>
           <div className="hidden items-center gap-2 md:flex">
-            <button className="rounded-lg bg-white/10 px-3 py-2 text-sm font-medium">Sign in</button>
-            <button className="rounded-lg bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white">Join free</button>
+            <Link href="/post" className="rounded-lg bg-white/10 px-3 py-2 text-sm font-medium">Sign in</Link>
+            <Link href="/alerts" className="rounded-lg bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white">Join free</Link>
           </div>
         </div>
         <div className="mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-4 pb-3 lg:px-6">

@@ -12,7 +12,7 @@ export default function ForumPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             {['Newest','Most replied','Most viewed','Ending soon'].map((filter) => (
-              <button key={filter} className={`rounded-full px-3 py-1.5 text-sm font-semibold ${filter === 'Newest' ? 'bg-[var(--accent)] text-white' : 'bg-slate-100 text-slate-600'}`}>{filter}</button>
+              <a key={filter} href="/forum" className={`rounded-full px-3 py-1.5 text-sm font-semibold ${filter === 'Newest' ? 'bg-[var(--accent)] text-white' : 'bg-slate-100 text-slate-600'}`}>{filter}</a>
             ))}
           </div>
         </div>
@@ -20,7 +20,7 @@ export default function ForumPage() {
         <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
           <span>Showing 1-6 of 124 mock threads</span>
           <div className="flex gap-2">
-            {[1,2,3,4].map((page) => <button key={page} className={`h-9 w-9 rounded-lg ${page === 1 ? 'bg-[var(--accent)] text-white' : 'bg-white text-slate-700 border border-slate-200'}`}>{page}</button>)}
+            {[1,2,3,4].map((page) => <a key={page} href="/forum" className={`flex h-9 w-9 items-center justify-center rounded-lg ${page === 1 ? 'bg-[var(--accent)] text-white' : 'bg-white text-slate-700 border border-slate-200'}`}>{page}</a>)}
           </div>
         </div>
       </div>

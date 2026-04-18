@@ -29,8 +29,8 @@ export function PostDealComposer() {
           ))}
         </div>
         <div className="mt-4 flex gap-3">
-          <button className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Preview post</button>
-          <button className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">Save draft</button>
+          <a href={preview.url} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Preview post</a>
+          <button onClick={async () => { await navigator.clipboard.writeText(JSON.stringify(preview, null, 2)); }} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">Save draft</button>
         </div>
       </section>
 

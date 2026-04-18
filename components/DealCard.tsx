@@ -31,9 +31,15 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
           <span>by {deal.submittedBy}</span>
           <span>{deal.submittedAt}</span>
         </div>
-        <Link href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="block text-lg font-semibold leading-tight text-slate-900 hover:text-blue-700">
-          {deal.title}
-        </Link>
+        {deal.externalUrl ? (
+          <a href={deal.externalUrl} target="_blank" rel="noopener noreferrer" className="block text-lg font-semibold leading-tight text-slate-900 hover:text-blue-700">
+            {deal.title}
+          </a>
+        ) : (
+          <Link href={`/deals/${deal.slug}`} className="block text-lg font-semibold leading-tight text-slate-900 hover:text-blue-700">
+            {deal.title}
+          </Link>
+        )}
         <p className="text-sm text-slate-600">{deal.summary}</p>
         <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
           <span className="font-semibold text-slate-900">{deal.store}</span>
@@ -44,8 +50,19 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
           <button onClick={() => setSaved((v) => !v)} className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 ${saved ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 text-slate-600"}`}>
             <Bookmark className="h-4 w-4" /> {saved ? "Saved" : "Save"}
           </button>
-          <button className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1.5 text-slate-600"><Share2 className="h-4 w-4" /> Share</button>
-          <Link href={deal.externalUrl ?? `/deals/${deal.slug}#comments`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1.5 text-slate-600"><MessageSquare className="h-4 w-4" /> {deal.externalUrl ? "Open live" : `${deal.comments} comments`}</Link>
+          <button onClick={async () => {
+            const shareUrl = deal.externalUrl ?? `${window.location.origin}/deals/${deal.slug}`;
+            if (navigator.share) {
+              await navigator.share({ title: deal.title, url: shareUrl });
+              return;
+            }
+            await navigator.clipboard.writeText(shareUrl);
+          }} className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1.5 text-slate-600"><Share2 className="h-4 w-4" /> Share</button>
+          {deal.externalUrl ? (
+            <a href={deal.externalUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1.5 text-slate-600"><MessageSquare className="h-4 w-4" /> Open live</a>
+          ) : (
+            <Link href={`/deals/${deal.slug}#comments`} className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-3 py-1.5 text-slate-600"><MessageSquare className="h-4 w-4" /> {deal.comments} comments</Link>
+          )}
         </div>
       </div>
 
@@ -54,9 +71,15 @@ export function DealCard({ deal, compact = false }: { deal: Deal; compact?: bool
           <div className="text-2xl font-black text-[var(--accent)]">{deal.currentPrice}</div>
           {deal.oldPrice && <div className="text-sm text-slate-500 line-through">{deal.oldPrice}</div>}
         </div>
-        <Link href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90">
-          {deal.externalUrl ? "Open deal" : "View deal"}
-        </Link>
+        {deal.externalUrl ? (
+          <a href={deal.externalUrl} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90">
+            Open deal
+          </a>
+        ) : (
+          <Link href={`/deals/${deal.slug}`} className="rounded-xl bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90">
+            View deal
+          </Link>
+        )}
       </div>
     </article>
   );

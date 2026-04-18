@@ -40,9 +40,13 @@ export default async function DealDetailPage({ params }: { params: Promise<{ slu
                   <span>Posted {deal.submittedAt}</span>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <Link href={deal.externalUrl ?? "#"} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white">Go to merchant</Link>
-                  <button className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Save</button>
-                  <button className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Share</button>
+                  {deal.externalUrl ? (
+                    <a href={deal.externalUrl} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white">Go to merchant</a>
+                  ) : (
+                    <Link href="#" className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white">Go to merchant</Link>
+                  )}
+                  <Link href="/alerts" className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Save</Link>
+                  <a href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noopener noreferrer" : undefined} className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Share</a>
                 </div>
                 <div className="grid gap-4 lg:grid-cols-3">
                   <div className="rounded-2xl bg-slate-50 p-4"><div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Editor notes</div><p className="mt-2 text-sm text-slate-700">{deal.editorNote}</p></div>
