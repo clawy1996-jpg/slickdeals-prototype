@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { DealCard } from "@/components/DealCard";
 import { SidebarCard } from "@/components/SidebarCard";
-import { categories, deals, featuredStores } from "@/data/mockData";
+import { categories, deals, featuredStores, liveDeals } from "@/data/mockData";
 
 export default function HomePage() {
-  const hero = deals[0];
-  const frontpage = deals;
+  const hero = liveDeals[0];
+  const frontpage = liveDeals;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-6 lg:px-6">
@@ -37,7 +37,7 @@ export default function HomePage() {
                     <span>{hero.shipping}</span>
                   </div>
                   <div className="flex gap-3">
-                    <Link href={`/deals/${hero.slug}`} className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Open deal</Link>
+                    <Link href={hero.externalUrl ?? `/deals/${hero.slug}`} target={hero.externalUrl ? "_blank" : undefined} rel={hero.externalUrl ? "noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white">Open live deal</Link>
                     <button className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700">Personalize feed</button>
                   </div>
                 </div>
@@ -69,13 +69,13 @@ export default function HomePage() {
             {featuredStores.map((store) => (
               <div key={store} className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-3 text-sm">
                 <span className="font-semibold text-slate-900">{store}</span>
-                <span className="text-slate-500">Fresh codes</span>
+                <span className="text-slate-500">Live links</span>
               </div>
             ))}
           </SidebarCard>
           <SidebarCard title="Community activity">
-            {deals.slice(0, 4).map((deal) => (
-              <Link key={deal.id} href={`/deals/${deal.slug}`} className="block rounded-xl border border-slate-200 p-3 text-sm hover:border-blue-500">
+            {frontpage.slice(0, 4).map((deal) => (
+              <Link key={deal.id} href={deal.externalUrl ?? `/deals/${deal.slug}`} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="block rounded-xl border border-slate-200 p-3 text-sm hover:border-blue-500">
                 <div className="font-semibold text-slate-900">{deal.title}</div>
                 <div className="mt-1 text-xs text-slate-500">{deal.temperature} heat • {deal.comments} comments</div>
               </Link>
@@ -85,7 +85,7 @@ export default function HomePage() {
             <ul className="space-y-2 text-sm text-slate-600">
               <li>Desktop-first two-column layout with sticky-feeling right rail.</li>
               <li>Reusable deal cards, forum rows, coupon cards, and utility pills.</li>
-              <li>Mock data only, optimized for demo speed and realism.</li>
+              <li>Homepage now routes into live marketplace links for 24 external deals.</li>
             </ul>
           </SidebarCard>
         </aside>

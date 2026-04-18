@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { deals, relatedDeals } from "@/data/mockData";
+import { deals, liveDeals, relatedDeals } from "@/data/mockData";
 import { DealCard } from "@/components/DealCard";
 
 export default async function DealDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const deal = deals.find((item) => item.slug === slug);
+  const deal = [...liveDeals, ...deals].find((item) => item.slug === slug);
   if (!deal) notFound();
 
   return (
@@ -40,7 +40,7 @@ export default async function DealDetailPage({ params }: { params: Promise<{ slu
                   <span>Posted {deal.submittedAt}</span>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <button className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white">Go to merchant</button>
+                  <Link href={deal.externalUrl ?? "#"} target={deal.externalUrl ? "_blank" : undefined} rel={deal.externalUrl ? "noreferrer" : undefined} className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white">Go to merchant</Link>
                   <button className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Save</button>
                   <button className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700">Share</button>
                 </div>
@@ -55,9 +55,10 @@ export default async function DealDetailPage({ params }: { params: Promise<{ slu
 
           <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-2xl font-black text-slate-900">Deal details</h2>
-            <p className="mb-4 text-sm leading-7 text-slate-600">{deal.summary} The prototype intentionally mirrors the long-form forum-to-commerce blend: headline, price proof, merchant CTA, then a wall of useful context and community validation.</p>
+            <p className="mb-4 text-sm leading-7 text-slate-600">{deal.summary} The prototype intentionally mirrors the long-form forum-to-commerce blend: headline, price proof, merchant CTA, then useful context and live outbound links.</p>
             <ul className="space-y-3 text-sm text-slate-700">
               {deal.bullets.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-4 py-3">{item}</li>)}
+              {deal.promoCode ? <li className="rounded-xl bg-amber-50 px-4 py-3 font-semibold text-amber-900">Promo code: {deal.promoCode}</li> : null}
             </ul>
           </section>
 

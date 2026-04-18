@@ -26,7 +26,10 @@ export function CouponGrid({ coupons }: { coupons: Coupon[] }) {
               {coupon.code ?? "AUTO-APPLY"}
             </div>
             <button
-              onClick={() => setCopied(coupon.id)}
+              onClick={async () => {
+                await navigator.clipboard.writeText(coupon.code ?? "AUTO-APPLY");
+                setCopied(coupon.id);
+              }}
               className="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white"
             >
               <Copy className="h-3.5 w-3.5" /> {copied === coupon.id ? "Copied" : "Copy"}
